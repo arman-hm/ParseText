@@ -1,0 +1,22 @@
+# Python-related files
+__pycache__/
+*.pyc
+*.pyo
+.ipynb_checkpoints/
+
+# Environment-related files
+OCR_env/
+*.env
+
+# Data files
+Data/
+
+# Checkpoints
+Models/checkpoints/
+
+# System files
+.DS_Store
+Thumbs.db
+
+# To dolist
+To do list.txt
