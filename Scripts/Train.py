@@ -2,6 +2,7 @@ import os
 from tqdm import tqdm
 from Levenshtein import distance as levenshtein_distance
 import matplotlib.pyplot as plt
+import torch
 
 
 
@@ -74,7 +75,8 @@ class Train():
                 checkpoint = kwargs.get('checkpoint')
                 path = checkpoint.get("path") # Default path
                 metrics = checkpoint.get("metrics", [])
-                self.checkpoint(epoch, path, metrics)
+                log_path = checkpoint.get("log_path")
+                self.checkpoint(epoch, path, log_path, metrics)
        
         # Handle optional plotting
         if "plots" in kwargs:
@@ -243,7 +245,7 @@ class Train():
         
         return results
   
-    def checkpoint(self, epoch, path, metrics):
+    def checkpoint(self, epoch, path, log_path, metrics):
         """
         Save the best model checkpoint for each metric in the list when it improves.
         
@@ -256,7 +258,7 @@ class Train():
         """
         # Ensure path exists
         os.makedirs(path, exist_ok=True)
-
+        os.makedirs(log_path, exist_ok=True)
         for metric in metrics:
             # Extract the current metric value
             if metric.startswith("Train_"):
@@ -306,8 +308,8 @@ class Train():
                 }, checkpoint_path)
                 print(f"Model checkpoint saved for metric '{metric}' at '{checkpoint_path}'.")
                                 # Save metrics log as .txt
-                log_path = os.path.join(path, f"metrics_log_{metric}.txt")
-                with open(log_path, "w") as log_file:
+                log = os.path.join(log_path, f"metrics_log_{metric}.txt")
+                with open(log, "w") as log_file:
                     log_file.write(f"Checkpoint saved for improved metric: {metric}\n")
                     log_file.write(f"Epoch: {epoch}\n")
                     log_file.write(f"Best {metric}: {current_value}\n")
@@ -317,7 +319,7 @@ class Train():
                     log_file.write(f"\n=== Validation Metrics ===\n")
                     for k, v in self.model_results_val.items():
                         log_file.write(f"{k}: {v[-1]}\n")
-                print(f"Metrics log saved at '{log_path}'.")
+                print(f"Metrics log saved at '{log}'.")
 
     def load_checkpoint(self,model, path:str):
         """

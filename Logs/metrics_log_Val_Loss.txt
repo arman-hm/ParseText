@@ -1,0 +1,17 @@
+Checkpoint saved for improved metric: Val_Loss
+Epoch: 1
+Best Val_Loss: 3.336682774803855
+
+=== Training Metrics ===
+Loss: 3.184322590152967
+character_accuracy: 0.019656888390295283
+word_accuracy: 4.5662100456621006e-05
+WER: 6.199178082191781
+CER: 0.9463852257005511
+
+=== Validation Metrics ===
+Loss: 3.336682774803855
+character_accuracy: 0.035158027427475466
+word_accuracy: 9.132420091324201e-05
+WER: 5.75607305936073
+CER: 0.8735014545715072

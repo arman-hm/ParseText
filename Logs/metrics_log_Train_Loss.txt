@@ -1,0 +1,17 @@
+Checkpoint saved for improved metric: Train_Loss
+Epoch: 2
+Best Train_Loss: 2.743277185039433
+
+=== Training Metrics ===
+Loss: 2.743277185039433
+character_accuracy: 0.09319934649931189
+word_accuracy: 0.05422374429223744
+WER: 5.161826484018265
+CER: 0.7565837139428315
+
+=== Validation Metrics ===
+Loss: 3.5647114927118473
+character_accuracy: 0.07235452637730796
+word_accuracy: 9.132420091324201e-05
+WER: 5.279452054794521
+CER: 0.807068283440002
