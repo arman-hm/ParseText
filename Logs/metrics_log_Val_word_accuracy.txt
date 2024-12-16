@@ -1,6 +1,6 @@
-Checkpoint saved for improved metric: Val_character_accuracy
+Checkpoint saved for improved metric: Val_word_accuracy
 Epoch: 96
-Best Val_character_accuracy: 0.9252754037104608
+Best Val_word_accuracy: 0.8878538812785388
 
 === Training Metrics ===
 Loss: 0.029980045084131362

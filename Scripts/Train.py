@@ -388,13 +388,15 @@ class Train():
         Args:
             path (str): Directory to save the plots.
         """
-        for key,value in self.model_results_train.items():
-            plt.plot (range(self.num_epochs), value, label = f'Train_{key}')
+        for key, value in self.model_results_train.items():
+            plt.plot(range(self.num_epochs), value, label=f'Train_{key}')
             plt.plot(self.model_results_val[key], label=f'Val_{key}')
             plt.legend()
-            plt.show()
-            
+
+            # Save the plot before displaying it
             plt.savefig(os.path.join(path, f"Model_{key}.png"))
+            plt.show()  # Call show after saving
+            plt.clf() 
 
 
     

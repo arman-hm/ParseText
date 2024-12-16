@@ -1,6 +1,6 @@
-Checkpoint saved for improved metric: Train_word_accuracy
+Checkpoint saved for improved metric: Train_character_accuracy
 Epoch: 97
-Best Train_word_accuracy: 0.9442694063926941
+Best Train_character_accuracy: 0.9630272818727973
 
 === Training Metrics ===
 Loss: 0.026519397328943695

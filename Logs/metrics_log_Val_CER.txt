@@ -1,0 +1,17 @@
+Checkpoint saved for improved metric: Val_CER
+Epoch: 73
+Best Val_CER: 0.020908909489807746
+
+=== Training Metrics ===
+Loss: 0.03795928066621904
+character_accuracy: 0.9495405716024053
+word_accuracy: 0.9264840182648402
+WER: 0.1013013698630137
+CER: 0.011893348256208212
+
+=== Validation Metrics ===
+Loss: 0.09442496611313386
+character_accuracy: 0.9243267705795937
+word_accuracy: 0.8865753424657534
+WER: 0.17397260273972603
+CER: 0.020908909489807746
