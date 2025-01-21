@@ -34,7 +34,6 @@ class Train():
         self.metrics = metrics
         self.num_epochs=num_epochs
         self.initial_metrics()
-        pass
 
     def initial_metrics(self):
         """

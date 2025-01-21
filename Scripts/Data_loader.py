@@ -4,7 +4,7 @@ import cv2
 import torch
 from tqdm import tqdm
 from PIL import Image
-from torch.utils.data import Dataset, random_split, DataLoader
+from torch.utils.data import Dataset, random_split
 
 
 

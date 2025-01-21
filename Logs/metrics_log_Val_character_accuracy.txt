@@ -1,17 +1,15 @@
 Checkpoint saved for improved metric: Val_character_accuracy
-Epoch: 96
-Best Val_character_accuracy: 0.9252754037104608
+Epoch: 146
+Best Val_character_accuracy: 0.9679762289723868
 
 === Training Metrics ===
-Loss: 0.029980045084131362
-character_accuracy: 0.9596210466609786
-word_accuracy: 0.9385844748858447
-WER: 0.08107305936073059
-CER: 0.009777265327010341
+Loss: 0.032558869402855635
+character_accuracy: 0.959396551886254
+word_accuracy: 0.9353756573247638
+CER: 0.009834594319463253
 
 === Validation Metrics ===
-Loss: 0.0947493466463956
-character_accuracy: 0.9252754037104608
-word_accuracy: 0.8878538812785388
-WER: 0.17589041095890412
-CER: 0.021451591346656876
+Loss: 0.05041430305157389
+character_accuracy: 0.9679762289723868
+word_accuracy: 0.9435874834728956
+CER: 0.010992980054240518

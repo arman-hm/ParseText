@@ -1,17 +1,15 @@
 Checkpoint saved for improved metric: Train_word_accuracy
-Epoch: 97
-Best Train_word_accuracy: 0.9442694063926941
+Epoch: 120
+Best Train_word_accuracy: 0.9436362903713256
 
 === Training Metrics ===
-Loss: 0.026519397328943695
-character_accuracy: 0.9630272818727973
-word_accuracy: 0.9442694063926941
-WER: 0.0723972602739726
-CER: 0.008793719942560013
+Loss: 0.027780136708170176
+character_accuracy: 0.9633136217454917
+word_accuracy: 0.9436362903713256
+CER: 0.008354442542885716
 
 === Validation Metrics ===
-Loss: 0.10891726037318056
-character_accuracy: 0.9111559578640953
-word_accuracy: 0.8735159817351598
-WER: 0.2015525114155251
-CER: 0.024430118320497473
+Loss: 0.05472763095583234
+character_accuracy: 0.9606447041179806
+word_accuracy: 0.9424122227119142
+CER: 0.011321856407797348
