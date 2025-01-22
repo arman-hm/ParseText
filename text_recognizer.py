@@ -14,7 +14,7 @@ Classes:
 import logging
 import torch
 import numpy as np
-from Scripts import Transforms
+from Scripts import transforms
 from Models import CRNN
 # Configure logging
 logger = logging.getLogger()
@@ -48,7 +48,7 @@ class TextRecognizer():
             index.
     """
 
-    def __init__(self, model_path: str, char_index=dict, transform=Transforms.Testing_transforms
+    def __init__(self, model_path: str, char_index=dict, transform=transforms.Testing_transforms
                  , device="cpu"):
         self.transform = transform
         self.char_to_index = char_index
@@ -106,6 +106,8 @@ class TextRecognizer():
             Tensor
         """
         tensors_list = []
+        if not images:
+            raise ValueError("List is empty.")
         for image in images:
             image = self.convert_image(image)
             image = self.transform(image=image)["image"]
@@ -152,7 +154,7 @@ class TextRecognizer():
         Decode predictions using CTC decoding.
 
         Args:
-            predictions (Tensor): Model predictions.
+            predictions (Numpy): Model predictions.
             blank (int): Blank token index.
 
         Returns:
