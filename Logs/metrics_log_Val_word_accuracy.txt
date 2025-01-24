@@ -1,15 +1,15 @@
 Checkpoint saved for improved metric: Val_word_accuracy
-Epoch: 133
-Best Val_word_accuracy: 0.9496106948729249
+Epoch: 137
+Best Val_word_accuracy: 0.9475539885412075
 
 === Training Metrics ===
-Loss: 0.03223105818033219
-character_accuracy: 0.9587365546876961
-word_accuracy: 0.9350029214433945
-CER: 0.009633332145571981
+Loss: 0.03539649121463299
+character_accuracy: 0.9551141710704876
+word_accuracy: 0.9296932453533471
+CER: 0.010540342619373491
 
 === Validation Metrics ===
-Loss: 0.04907186435801642
-character_accuracy: 0.9651503962494932
-word_accuracy: 0.9496106948729249
-CER: 0.009859157214820502
+Loss: 0.05058052843170507
+character_accuracy: 0.968231524724751
+word_accuracy: 0.9475539885412075
+CER: 0.010418195731108906
