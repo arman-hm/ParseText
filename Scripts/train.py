@@ -1,3 +1,15 @@
+"""
+Train Module
+
+Author: Arman Hajimirza
+Date: January 24, 2025
+
+This module contains the `Train` class, which is used to training model.
+
+Classes:
+    Train: A class to handle the training, validation, checkpointing, and metric evaluation 
+    for an OCR model with CTC loss.
+"""
 import os
 from tqdm import tqdm
 from Levenshtein import distance as levenshtein_distance
@@ -21,7 +33,8 @@ class Train():
         metrics (list): List of metrics to evaluate during training.
         num_epochs (int): Number of epochs for training.
     """
-    def __init__(self, train_loader, val_loader, criterion, optimizer, device,char_to_index ,metrics=list, num_epochs=10):
+    def __init__(self, train_loader, val_loader, criterion, optimizer, device,char_to_index
+                 ,metrics=list, num_epochs=10):
         """
         Initialize the training class with data loaders, optimizer, device, and metrics.
         """
@@ -33,6 +46,8 @@ class Train():
         self.char_to_index = char_to_index
         self.metrics = metrics
         self.num_epochs=num_epochs
+        self.model = None
+        self.starting_epoch = 0
         self.initial_metrics()
 
     def initial_metrics(self):
@@ -48,7 +63,7 @@ class Train():
             self.model_results_train[metric] = []
 
         self.starting_epoch = 0
-        self.best_metrics ={}        
+        self.best_metrics ={}
 
     def fit(self,model,**kwargs):
         """
@@ -66,9 +81,10 @@ class Train():
 
             # Log training and validation metrics for the epoch
             print("Epoch: ", f"[{epoch+1}/{self.num_epochs}]")
-            print(", ".join(f"Train_{key}: {value_list[-1]}" for key, value_list in self.model_results_train.items()))
-            print(", ".join(f"Val_{key}: {value_list[-1]}" for key, value_list in self.model_results_val.items()))
-            
+            print(", ".join(f"Train_{key}: {value_list[-1]}" for key, value_list in
+                             self.model_results_train.items()))
+            print(", ".join(f"Val_{key}: {value_list[-1]}" for key, value_list in
+                             self.model_results_val.items()))
             # Handle checkpointing
             if 'checkpoint' in kwargs:
                 checkpoint = kwargs.get('checkpoint')
@@ -76,7 +92,6 @@ class Train():
                 metrics = checkpoint.get("metrics", [])
                 log_path = checkpoint.get("log_path")
                 self.checkpoint(epoch, path, log_path, metrics)
-       
         # Handle optional plotting
         if "plots" in kwargs:
             self.plot(path = kwargs['plots'].get("path"))
@@ -89,9 +104,9 @@ class Train():
         epoch_results = {"Loss": 0}
         for metric in self.metrics:
             epoch_results[metric] = 0.0
-        
-        self.model.train()  # Set the model to training mode
-        progress_bar = tqdm(enumerate(self.train_loader), total=len(self.train_loader), desc="Training", leave=False)
+        self.model.train() # Set the model to training mode
+        progress_bar = tqdm(enumerate(self.train_loader), total=len(self.train_loader)
+                            , desc="Training", leave=False)
         # Iterate on Training Data
         for batch_idx, (images, targets, input_lengths, target_lengths) in progress_bar:
             images, targets = images.to(self.device), targets.to(self.device)
@@ -108,7 +123,6 @@ class Train():
             loss.backward()
             self.optimizer.step()
             epoch_results["Loss"] += loss.item()
-            
             # Realtime Evaluation each batch
             self.model.eval()
             metrics = self.cal_metrics(log_probs, targets, target_lengths)
@@ -151,7 +165,6 @@ class Train():
                 # Calculate CTC Loss
                 loss = self.criterion(log_probs, targets, input_lengths, target_lengths)
                 epoch_val["Loss"] += loss.item()
-    
                 metrics = self.cal_metrics(log_probs, targets, target_lengths)
                 for key, value in metrics.items():
                 # Construct the corresponding epoch key
@@ -196,32 +209,40 @@ class Train():
                 if pred == target:
                     correct_words += 1
             return correct_words
-        
+
         # Calculate character-level error rate accuracy
         def cer(predictions, targets):
             character_error_rate = 0
             for pred, target in zip(predictions, targets):
-                reference = [list(self.char_to_index.keys())[list(self.char_to_index.values()).index(index)] for index in target]
-                hypothesis = [list(self.char_to_index.keys())[list(self.char_to_index.values()).index(index)] for index in pred]
+                reference = [list(self.char_to_index.keys())
+                             [list(self.char_to_index.values()).index(index)] for index in target]
+                hypothesis = [list(self.char_to_index.keys())
+                              [list(self.char_to_index.values()).index(index)] for index in pred]
                 # Character-level Levenshtein distance
                 distance = levenshtein_distance(reference, hypothesis)
-                character_error_rate += distance / len(reference) if len(reference) > 0 else float('inf')
-            return character_error_rate 
-        
+                if len(reference) > 0:
+                    character_error_rate += distance / len(reference)
+                else:
+                    character_error_rate = float('inf')
+            return character_error_rate
+
         # Calculate word-level error rate accuracy
         def wer(predictions, targets):
             word_error_rate = 0
-            total_words = len(targets)
             for pred, target in zip(predictions, targets):
-                reference =''.join([list(self.char_to_index.keys())[list(self.char_to_index.values()).index(index)] for index in target ])
-                hypothesis = ''.join([list(self.char_to_index.keys())[list(self.char_to_index.values()).index(index)] for index in pred])
+                reference =''.join([list(self.char_to_index.keys())
+                                    [list(self.char_to_index.values()).index(index)]
+                                      for index in target ])
+                hypothesis = ''.join([list(self.char_to_index.keys())
+                                      [list(self.char_to_index.values()).index(index)]
+                                        for index in pred])
                 ref_words = reference.split()
                 hyp_words = hypothesis.split()
                 # Word-level Levenshtein distance
                 distance = levenshtein_distance(" ".join(ref_words), " ".join(hyp_words))
                 word_error_rate += distance / len(ref_words) if len(ref_words) > 0 else float('inf')
             return word_error_rate
-        
+
         metric_functions = {
             "character_accuracy": character_accuracy,
             "word_accuracy": word_accuracy,
@@ -230,24 +251,21 @@ class Train():
         }
         # extracts the predicted character indices from the log probabilities output
         predictions = log_probs.argmax(2).transpose(0, 1).cpu().numpy()
-        
         # Decode predictions and targets to list of character indices
         pred_texts = self.ctc_decode(predictions, blank=0)
         target_texts = [targets[i][:target_lengths[i]].tolist() for i in range(len(targets))]
-        
         # Calculate imported metrics
         for metric in self.metrics:
             if metric in metric_functions:
                 results[metric] = metric_functions[metric](pred_texts, target_texts)
             else:
                 raise ValueError(f"Metric '{metric}' is not implemented.")
-        
         return results
-  
+
     def checkpoint(self, epoch, path, log_path, metrics):
         """
         Save the best model checkpoint for each metric in the list when it improves.
-        
+
         Args:
             epoch (int): Current training epoch.
             path (str): Directory to save the model checkpoint.
@@ -312,10 +330,10 @@ class Train():
                     log_file.write(f"Checkpoint saved for improved metric: {metric}\n")
                     log_file.write(f"Epoch: {epoch}\n")
                     log_file.write(f"Best {metric}: {current_value}\n")
-                    log_file.write(f"\n=== Training Metrics ===\n")
+                    log_file.write("\n=== Training Metrics ===\n")
                     for k, v in self.model_results_train.items():
                         log_file.write(f"{k}: {v[-1]}\n")
-                    log_file.write(f"\n=== Validation Metrics ===\n")
+                    log_file.write("\n=== Validation Metrics ===\n")
                     for k, v in self.model_results_val.items():
                         log_file.write(f"{k}: {v[-1]}\n")
                 print(f"Metrics log saved at '{log}'.")
@@ -333,31 +351,28 @@ class Train():
         try:
             # Load the checkpoint
             checkpoint = torch.load(path)
-
             # Restore model and optimizer states
             self.model = model
             self.model.load_state_dict(checkpoint['model_state_dict'])
             self.optimizer.load_state_dict(checkpoint['optimizer_state_dict'])
             self.starting_epoch = checkpoint['epoch'] + 1  # Resume from next epoch
 
-            # Restore best metrics
-            if 'best_metrics' in checkpoint:
-                self.best_metrics = checkpoint['best_metrics']
-                print(f"Best metrics restored: {self.best_metrics}")
-
-            # Restore training and validation metrics
-            if 'current_epoch_metrics' in checkpoint:
-                self.model_results_train = checkpoint['current_epoch_metrics']['train']
-                self.model_results_val = checkpoint['current_epoch_metrics']['val']
-                print(f"Training and validation metrics restored.")
-
-            print(f"Checkpoint loaded successfully. Resuming from epoch {self.starting_epoch}.")
-
         except Exception as e:
             print(f"Error loading checkpoint: {e}")
-        
-        pass
-    
+
+        # Restore best metrics
+        if 'best_metrics' in checkpoint:
+            self.best_metrics = checkpoint['best_metrics']
+            print(f"Best metrics restored: {self.best_metrics}")
+
+        # Restore training and validation metrics
+        if 'current_epoch_metrics' in checkpoint:
+            self.model_results_train = checkpoint['current_epoch_metrics']['train']
+            self.model_results_val = checkpoint['current_epoch_metrics']['val']
+            print("Training and validation metrics restored.")
+
+        print(f"Checkpoint loaded successfully. Resuming from epoch {self.starting_epoch}.")
+
     def ctc_decode(self,predictions, blank=0):
         """
         Decode predictions using CTC decoding.
@@ -379,7 +394,7 @@ class Train():
                 previous_char = char
             pred_texts.append(pred_chars)
         return pred_texts
-    
+
     def plot(self, path):
         """
         Generate and save plots of training and validation metrics.
@@ -391,11 +406,8 @@ class Train():
             plt.plot(range(self.num_epochs), value, label=f'Train_{key}')
             plt.plot(self.model_results_val[key], label=f'Val_{key}')
             plt.legend()
-
             # Save the plot before displaying it
             plt.savefig(os.path.join(path, f"Model_{key}.png"))
             plt.show()  # Call show after saving
-            plt.clf() 
-
-
+            plt.clf()
     

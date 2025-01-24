@@ -1,3 +1,27 @@
+"""
+Transform Module
+
+Author: Arman Hajimirza
+Date: January 24, 2025
+
+This module contains the "Training_transforms" "Testing_transforms" and  functions, which is used
+to to transform imput image for train and inference data.
+
+Functions:
+    The `Training_transforms` include a series of augmentations to 
+    increase the variability of the training data:
+        - `InvertImg`: Randomly inverts the colors of the image.
+        - `Perspective`: Applies a random perspective transformation.
+        - `ColorJitter`: Randomly changes the brightness, contrast, saturation, and hue.
+        - `Rotate`: Randomly rotates the image within a given range.
+        - `Sharpen`: Randomly sharpens the image.
+        - `Resize`: Resizes the image to a fixed size.
+        - `ToTensorV2`: Converts the image to a PyTorch tensor.
+    The `Testing_transforms` include transformations for preprocessing
+    the testing data:
+        - `Resize`: Resizes the image to a fixed size.
+        - `ToTensorV2`: Converts the image to a PyTorch tensor.
+"""
 import albumentations as A
 from albumentations.pytorch import ToTensorV2
 

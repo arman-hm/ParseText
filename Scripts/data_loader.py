@@ -1,5 +1,14 @@
 """
-hjhfjkhvj
+Data loader Module
+
+Author: Arman Hajimirza
+Date: January 24, 2025
+
+This module contains the `OCRDataset` class, which is used to prepar data for feed them to model.
+
+Classes:
+    OCRDataset: A class for load image from dict and store them to Memory to speedup
+    loading process.
 """
 import os
 import numpy as np
