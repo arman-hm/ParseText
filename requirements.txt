@@ -1,24 +1,8 @@
-geopandas==1.0.1
-matplotlib==3.8.0
-matplotlib-inline==0.1.7
-matplotlib-venn==1.1.1
-numpy==1.26.4
-opencv-python==4.10.0.84
-opencv-python-headless==4.10.0.84
-pandas==2.2.2
-pandas-datareader==0.10.0
-pandas-gbq==0.24.0
-pandas-stubs==2.2.2.240909
-scikit-learn==1.5.2
-sklearn-pandas==2.2.0
-tensorflow==2.17.1
-tensorflow-datasets==4.9.7
-tensorflow-hub==0.16.1
-tensorflow-io-gcs-filesystem==0.37.1
-tensorflow-metadata==1.13.1
-tensorflow-probability==0.24.0
-torch @ https://download.pytorch.org/whl/cu121_full/torch-2.5.1%2Bcu121-cp310-cp310-linux_x86_64.whl
-torchaudio @ https://download.pytorch.org/whl/cu121/torchaudio-2.5.1%2Bcu121-cp310-cp310-linux_x86_64.whl
-torchsummary==1.5.1
-torchvision @ https://download.pytorch.org/whl/cu121/torchvision-0.20.1%2Bcu121-cp310-cp310-linux_x86_64.whl
-tqdm==4.66.6
+albumentations==2.0.1
+Levenshtein==0.26.1
+matplotlib==3.10.0
+numpy==2.2.2
+pandas==2.2.3
+pillow==11.1.0
+torch==2.5.1
+tqdm==4.67.1

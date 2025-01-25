@@ -6,6 +6,7 @@ __pycache__/
 
 # Environment-related files
 OCR_env/
+clean_venv/
 *.env
 
 # Data files
