@@ -20,7 +20,15 @@ Thumbs.db
 
 # To dolist
 To do list.txt
-pesonal_track
 
-# annotationdata
+# notebooks
 annotation.ipynb
+Train_persian_OCR.ipynb
+
+#folders
+model_weights/
+test/
+result/
+Plots/
+Logs/
+pesonal_track/
