@@ -16,7 +16,7 @@ Handling Complex Ligatures and Diacritics: Improved recognition of intricate asp
 
 Stay tuned as ParseText evolves to meet these goals and more!
 
-### Geting started
+### Getting started
 1. Clone the repository:
 ```
 git clone https://github.com/arman-hm/ParseText
@@ -39,10 +39,10 @@ pip install -r requirements.txt
 3. Download pretrained weights:
 
     Download pretrained model from [here](https://drive.google.com/file/d/1xEsHmCrvpDtQKeNT8KF9VExBv2GjSyNR/view?usp=drive_link) or:
-    ```
-    pip install gdown
-    gdown https://drive.google.com/uc?id=1xEsHmCrvpDtQKeNT8KF9VExBv2GjSyNR
-    ```
+```
+pip install gdown
+gdown https://drive.google.com/uc?id=1xEsHmCrvpDtQKeNT8KF9VExBv2GjSyNR
+```
 ## Usage
 
 ### Text Recognition
